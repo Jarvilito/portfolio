@@ -17,21 +17,30 @@ import Alerts from "./components/Alerts";
 import TimelineContextProvider from "./context/TimelineContext";
 import GlobalContextProvider from "./context/GlobalContext";
 import { Footer } from "./components/Footer";
+import AuthContextProvider from "./context/AuthContext";
+import CommentContextProvider from "./context/CommentContext";
+import ReplyContextProvider from "./context/ReplyContext";
 
 function App() {
   return (
     <Router>
-      <GlobalContextProvider>
-        <AlertContextProvider>
-          <SkillContextProvider>
-            <TimelineContextProvider>
-              <Alerts />
-              <OpenSpeedDial />
-              <Navbar />
-            </TimelineContextProvider>
-          </SkillContextProvider>
-        </AlertContextProvider>
-      </GlobalContextProvider>
+      <AlertContextProvider>
+        <AuthContextProvider>
+          <GlobalContextProvider>
+            <SkillContextProvider>
+              <CommentContextProvider>
+                <ReplyContextProvider>
+                  <TimelineContextProvider>
+                    <Alerts />
+                    <OpenSpeedDial />
+                    <Navbar />
+                  </TimelineContextProvider>
+                </ReplyContextProvider>
+              </CommentContextProvider>
+            </SkillContextProvider>
+          </GlobalContextProvider>
+        </AuthContextProvider>
+      </AlertContextProvider>
     </Router>
   );
 }

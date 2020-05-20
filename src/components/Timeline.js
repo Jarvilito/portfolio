@@ -6,6 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Fade from "react-reveal/Fade";
 import TimelineDetails from "./TimelineDetails";
 import { TimelineContext } from "../context/TimelineContext";
+import ComponentTitle from "./ComponentTitle";
 
 const useStyle = makeStyles((theme) => ({
   root: {
@@ -33,16 +34,7 @@ export const Timeline = () => {
 
   return (
     <div className={classes.root} id="timeline">
-      <Grid container justify="center" className={classes.textCenter}>
-        <Grid item>
-          <Fade bottom>
-            <Typography gutterBottom variant="button" className={classes.title}>
-              Timeline
-            </Typography>
-          </Fade>
-        </Grid>
-      </Grid>
-      <Divider />
+      <ComponentTitle title="Timeline" />
       <Container maxWidth="lg">
         <VerticalTimeline className={classes.bg}>
           {timelines.length

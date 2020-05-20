@@ -9,6 +9,7 @@ import { loadCSS } from "fg-loadcss";
 import { SkillContext } from "../context/SkillContext";
 import SkillDetails from "./SkillDetails";
 import { AlertContext } from "../context/AlertContext";
+import ComponentTitle from "./ComponentTitle";
 
 const useStyle = makeStyles((theme) => ({
   root: {
@@ -89,17 +90,7 @@ const Skills = () => {
   }, []);
   return (
     <div className={classes.root} id="skills">
-      <Grid container justify="center" className={classes.textCenter}>
-        <Grid item>
-          <Fade bottom>
-            <Typography gutterBottom variant="button" className={classes.title}>
-              My Skills
-            </Typography>
-          </Fade>
-        </Grid>
-      </Grid>
-      <Divider />
-
+      <ComponentTitle title="My Skills" />
       <Container maxWidth="md">
         <div className={classes.textCenter} style={{ marginTop: "10px" }}>
           <Typography

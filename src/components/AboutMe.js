@@ -19,6 +19,7 @@ import LinkedInIcon from "@material-ui/icons/LinkedIn";
 import YouTubeIcon from "@material-ui/icons/YouTube";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import JarvisCover from "../img/jarvis-cover.jpg";
+import ComponentTitle from "./ComponentTitle";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -126,21 +127,13 @@ function AboutMe() {
   });
   return (
     <div className={classes.root} id="aboutMe">
-      <div className={classes.centerText}>
-        <Fade bottom>
-          <Typography gutterBottom variant="button" className={classes.title}>
-            {aboutMe.header}
-          </Typography>
-        </Fade>
-      </div>
-      <Divider />
+      <ComponentTitle title={aboutMe.header} />
       <Container maxWidth="sm">
         <Grid container justify="center">
           <Grid item>
             <div>
               <Fade>
                 <Avatar
-                  variant="round"
                   className={classes.avatar}
                   alt="Jarvis Palad"
                   src="https://scontent.fmnl17-2.fna.fbcdn.net/v/t1.0-9/p960x960/64285700_10212124684991600_5599372718043561984_o.jpg?_nc_cat=111&_nc_sid=7aed08&_nc_eui2=AeH9ZtM6mFP5EUjOjF3vbWKVMLSWiMc9uwcwtJaIxz27B4thklo7w-yDoI_3QpVOODg&_nc_ohc=OV6T8GBzdgMAX_0zdwu&_nc_ht=scontent.fmnl17-2.fna&_nc_tp=6&oh=3cbd45f7c913fe9882ca148995ead484&oe=5EC99CFC"

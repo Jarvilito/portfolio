@@ -143,8 +143,8 @@ const AddSkills = ({ handleDialogClose, skill }) => {
             snackbarDispatch({
               type: "OPEN_SNACKBAR",
               payload: {
-                content: "Skill Deleted Successfully",
-                severity: "success",
+                content: "Skill Deleted!",
+                severity: "warning",
               },
             });
           });

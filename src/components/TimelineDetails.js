@@ -8,6 +8,7 @@ import { useTheme } from "@material-ui/core/styles";
 import AddTimeline from "./AddTimeline";
 import Chip from "@material-ui/core/Chip";
 import LinkIcon from "@material-ui/icons/Link";
+import { AuthContext } from "../context/AuthContext";
 
 const useStyles = makeStyles((theme) => ({
   textToUpperCase: {
@@ -20,19 +21,17 @@ const useStyles = makeStyles((theme) => ({
 
 const TimelineDetails = ({ timeline }) => {
   const classes = useStyles();
+  const { user } = useContext(AuthContext);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const handleForm = () => {
-    console.log("click");
-    // setDialogOpen(true);
+    if (user.isAdmin) {
+      setDialogOpen(true);
+    }
   };
-
-  useEffect(() => {
-    console.log(timeline);
-  }, []);
 
   if (!timeline.color) {
     return null;

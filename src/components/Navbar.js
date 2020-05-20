@@ -33,6 +33,9 @@ import { Timeline } from "./Timeline";
 import ClearAllIcon from "@material-ui/icons/ClearAll";
 import { Hobby } from "./Hobby";
 import { Footer } from "./Footer";
+import Login from "./auth/Login";
+import CommentIcon from "@material-ui/icons/Comment";
+import Comment from "./comment/Comment";
 // import { Footer } from "./Footer";
 
 const useStyles = makeStyles((theme) => ({
@@ -135,6 +138,11 @@ function Navbar() {
       label: "Hobby",
       id: "hobby",
     },
+    {
+      icon: CommentIcon,
+      label: "Comments",
+      id: "comments",
+    },
   ]);
 
   const handleClick = (e) => {
@@ -143,6 +151,10 @@ function Navbar() {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const loginLogout = () => {
+    return <Login />;
   };
 
   return (
@@ -183,6 +195,7 @@ function Navbar() {
                             </ScrollIntoView>
                           );
                         })}
+                        <Login />
                       </div>
                     </Hidden>
                     <Hidden mdUp>
@@ -221,6 +234,10 @@ function Navbar() {
                             </MenuItem>
                           );
                         })}
+                        <Divider variant="middle" />
+                        <MenuItem onClick={handleClose}>
+                          <Login />
+                        </MenuItem>
                       </Menu>
                     </Hidden>
                   </Toolbar>
@@ -260,6 +277,7 @@ function Navbar() {
               <Skills />
               <Timeline />
               <Hobby />
+              <Comment />
             </div>
           </Container>
           <Footer></Footer>

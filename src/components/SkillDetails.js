@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Grid, Icon, Typography } from "@material-ui/core";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import { makeStyles } from "@material-ui/core/styles";
@@ -6,6 +6,7 @@ import { Dialog, DialogActions } from "@material-ui/core";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import AddSkills from "./AddSkills";
+import { AuthContext } from "../context/AuthContext";
 
 const useStyle = makeStyles((theme) => ({
   textCenter: {
@@ -31,6 +32,7 @@ const useStyle = makeStyles((theme) => ({
 }));
 
 const SkillDetails = ({ skill, progressColor }) => {
+  const { user } = useContext(AuthContext);
   const classes = useStyle();
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -38,8 +40,9 @@ const SkillDetails = ({ skill, progressColor }) => {
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const openSkillDetails = () => {
-    // console.log('')
-    // setDialogOpen(true);
+    if (user.isAdmin) {
+      setDialogOpen(true);
+    }
   };
 
   return (

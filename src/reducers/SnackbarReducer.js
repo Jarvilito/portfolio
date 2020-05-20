@@ -10,8 +10,8 @@ export const snackbarReducer = (state, action) => {
     case "CLOSE_SNACKBAR":
       return {
         open: false,
-        content: "",
-        severity: "success",
+        content: state.content,
+        severity: state.severity,
       };
     default:
       return state;

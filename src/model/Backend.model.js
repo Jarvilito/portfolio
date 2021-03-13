@@ -1,6 +1,6 @@
 const prod = "https://jarvis-portfolio.herokuapp.com";
 
-const local = "http://localhost:5000";
+const local = "https://jarvis-portfolio.herokuapp.com";
 
 let backend;
 

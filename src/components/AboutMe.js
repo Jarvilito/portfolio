@@ -12,19 +12,21 @@ import {
   Container,
   Tooltip,
 } from "@material-ui/core/";
+import { spacing } from '@material-ui/system';
 import Fade from "react-reveal/Fade";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import InstagramIcon from "@material-ui/icons/Instagram";
 import LinkedInIcon from "@material-ui/icons/LinkedIn";
 import YouTubeIcon from "@material-ui/icons/YouTube";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import JarvisCover from "../img/jarvis-cover.jpg";
+import JarvisCover from "../img/profile.jpg";
 import ComponentTitle from "./ComponentTitle";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     // height: "100vh",
     // maxHeight: "350px",
+    marginTop: '20%',
     marginBottom: "200px",
   },
   title: {
@@ -35,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
 
   content: {
     fontSize: "18px",
+    margin: '30px 0',
   },
   padding: {
     padding: "25px",
@@ -43,7 +46,14 @@ const useStyles = makeStyles((theme) => ({
     display: "block",
     margin: "0 auto",
     marginTop: "20px",
-    height: "100%",
+    [theme.breakpoints.down('sm')] : {
+      height: '250px'
+    },
+
+    [theme.breakpoints.up('md')] : {
+      height: '500px'
+    },
+
     width: "70%",
   },
 
@@ -56,11 +66,11 @@ const useStyles = makeStyles((theme) => ({
   },
 
   iconClass: {
-    fontSize: "40px",
+    fontSize: "6rem",
   },
   footer: {
-    fontSize: "20px",
-    letterSpacing: "5px",
+    fontSize: "2rem",
+    letterSpacing: "3px",
   },
 
   paddingBottom: {
@@ -76,10 +86,37 @@ const useStyles = makeStyles((theme) => ({
   },
 
   coverPhoto: {
-    maxWidth: "100vw",
-    width: "650px",
-    height: "100%",
+    
+    minWidth: "250px",
+    width: '100%',
+    [theme.breakpoints.down('sm')] : {
+      height: '350px'
+    },
+
+    [theme.breakpoints.up('md')] : {
+      height: '550px'
+    },
   },
+
+  container: {
+    borderRadius: '15px',
+    marginLeft: '20px',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+
+  containerTitle: {
+    fontSize: '3rem',
+    letterSpacing: '3px',
+    margin: '20px 0',
+  },
+
+
+  paddingTop: {
+    paddingTop: '20px',
+  }
+
+
 }));
 
 function AboutMe() {
@@ -122,35 +159,25 @@ function AboutMe() {
 
   const [aboutMe] = useState({
     header: "About Me",
-    description: `Hi, I am Jarvis Lorenz De Villa Palad, web / hybrid mobile app developer, born in Philippines. Living in Quezon City. With ${yearOfExp} experience on web development, and ${mobileYearofExp} experience on cross platform development. Welcome to my portfolio. Keep scrolling to know more about me`,
-    footer: "Connect With Me",
+    description: `Hi, I am Jarvis Lorenz De Villa Palad, web / mobile app developer, born in Philippines. Living in Quezon City. With ${yearOfExp} experience on web development, and ${mobileYearofExp} experience on cross platform development. Welcome to my portfolio. Keep scrolling to know more about me`,
+    footer: "Connect with me",
   });
   return (
     <div className={classes.root} id="aboutMe">
-      <ComponentTitle title={aboutMe.header} />
-      <Container maxWidth="sm">
+     
+      <Container maxWidth="lg">
         <Grid container justify="center">
-          <Grid item>
-            <div>
-              <Fade>
-                <Avatar
-                  className={classes.avatar}
-                  alt="Jarvis Palad"
-                  src="https://scontent.fmnl17-2.fna.fbcdn.net/v/t1.0-9/p960x960/64285700_10212124684991600_5599372718043561984_o.jpg?_nc_cat=111&_nc_sid=7aed08&_nc_eui2=AeH9ZtM6mFP5EUjOjF3vbWKVMLSWiMc9uwcwtJaIxz27B4thklo7w-yDoI_3QpVOODg&_nc_ohc=OV6T8GBzdgMAX_0zdwu&_nc_ht=scontent.fmnl17-2.fna&_nc_tp=6&oh=3cbd45f7c913fe9882ca148995ead484&oe=5EC99CFC"
-                ></Avatar>
-                {/* <img
-                  src={JarvisCover}
-                  className={classes.coverPhoto}
-                  alt="Jarvis"
-                /> */}
-              </Fade>
-            </div>
+          <Grid item sm={12} md={5}>
+            <Avatar alt="Jarvis Palad Profile" src={JarvisCover} className={classes.coverPhoto} variant="rounded" />
           </Grid>
-          <Grid item>
+
+          <Grid sm={12} md={7} item>
             <Fade bottom>
-              <Card className={`${classes.padding} ${classes.noBorder}`}>
-                <CardContent>
-                  <Typography
+              <div className={classes.container}>
+              <span className={classes.containerTitle}>About me</span>
+              <Divider  />
+              <Typography
+      
                     variant="body1"
                     display="block"
                     color="textPrimary"
@@ -160,22 +187,19 @@ function AboutMe() {
                   >
                     {aboutMe.description}
                   </Typography>
-                  {/* <Card>
-                  <CardContent> */}
-                  <div className={classes.paddingBottom}>
-                    {/* <AddCircleOutlineIcon color="primary" /> */}
-                    <Typography
+
+                  <Typography
                       className={classes.footer}
                       gutterBottom
-                      variant="button"
+                     
                     >
                       {aboutMe.footer}
                     </Typography>
-                  </div>
 
-                  <Divider variant="middle" />
-                  <Fade left>
-                    <div>
+                    <Divider  />
+
+                    <Fade left>
+                    <div className={classes.paddingTop}>
                       {icons.map((icon) => {
                         return (
                           <Tooltip
@@ -184,7 +208,7 @@ function AboutMe() {
                             aria-label="social media"
                             arrow
                           >
-                            <IconButton href={icon.link} target="_blank">
+                            <IconButton href={icon.link} target="_blank" >
                               <icon.materialIcon
                                 className={`${classes.iconSpace} ${classes.iconClass}`}
                                 style={{ color: icon.color }}
@@ -196,21 +220,24 @@ function AboutMe() {
                     </div>
                     <div
                       className={classes.contact}
-                      style={{ letterSpacing: !fullScreen ? "5px" : "1px" }}
+                      style={{ letterSpacing: !fullScreen ? "3px" : "1px" }}
                     >
                       palad.jarvis@gmail.com
                     </div>
                     <div
                       className={classes.contact}
-                      style={{ letterSpacing: !fullScreen ? "5px" : "1px" }}
+                      style={{ letterSpacing: !fullScreen ? "3px" : "1px" }}
                     >
                       +639212385207
                     </div>
-                  </Fade>
-                  {/* </CardContent>
-                </Card> */}
-                </CardContent>
-              </Card>
+                  </Fade>  
+              </div>
+
+
+
+
+           
+
             </Fade>
           </Grid>
         </Grid>

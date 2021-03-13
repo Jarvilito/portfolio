@@ -272,7 +272,7 @@ function Navbar() {
                 <img src={laptop2} alt="laptop" className={classes.img}></img>
               </Grid>
             </Grid>
-            <div style={{ marginTop: "200px" }}>
+            <div style={{ marginTop: "500px" }}>
               <AboutMe />
               <Skills />
               <Timeline />

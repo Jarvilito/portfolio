@@ -1,6 +1,7 @@
 body {
   height: 100%;
   margin: 0;
+  font-family: 'Quicksand', serif;
 }
 .cover-photo {
   width: 100vw;
@@ -13,15 +14,14 @@ body {
 
 .hero-image {
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url("https://images.pexels.com/photos/733852/pexels-photo-733852.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
+    url("../src/img/coverphoto.jpeg");
   margin-top: -25px;
   height: 85vh;
+  max-height: 1200px;
   background-position: center;
   background-repeat: no-repeat;
-  position: relative;
   top: 0;
   background-size: cover;
-  margin-bottom: 15vh;
 }
 
 /* .app-bar {

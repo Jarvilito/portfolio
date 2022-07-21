@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: "5px",
   },
 
+
   content: {
     fontSize: "18px",
     margin: '30px 0',
@@ -46,11 +47,11 @@ const useStyles = makeStyles((theme) => ({
     display: "block",
     margin: "0 auto",
     marginTop: "20px",
-    [theme.breakpoints.down('sm')] : {
+    [theme.breakpoints.down('sm')]: {
       height: '250px'
     },
 
-    [theme.breakpoints.up('md')] : {
+    [theme.breakpoints.up('md')]: {
       height: '500px'
     },
 
@@ -81,19 +82,25 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "500",
   },
 
+  email: {
+    fontSize: "20px",
+    fontWeight: "500",
+    cursor: "pointer",
+  },
+
   centerText: {
     textAlign: "center",
   },
 
   coverPhoto: {
-    
+
     minWidth: "250px",
     width: '100%',
-    [theme.breakpoints.down('sm')] : {
+    [theme.breakpoints.down('sm')]: {
       height: '350px'
     },
 
-    [theme.breakpoints.up('md')] : {
+    [theme.breakpoints.up('md')]: {
       height: '550px'
     },
   },
@@ -164,7 +171,7 @@ function AboutMe() {
   });
   return (
     <div className={classes.root} id="aboutMe">
-     
+
       <Container maxWidth="lg">
         <Grid container justify="center">
           <Grid item sm={12} md={5}>
@@ -174,69 +181,78 @@ function AboutMe() {
           <Grid sm={12} md={7} item>
             <Fade bottom>
               <div className={classes.container}>
-              <span className={classes.containerTitle}>About me</span>
-              <Divider  />
-              <Typography
-      
-                    variant="body1"
-                    display="block"
-                    color="textPrimary"
-                    component="p"
-                    className={`transparent ${classes.content}`}
-                    gutterBottom
+                <span className={classes.containerTitle}>About me</span>
+                <Divider />
+                <Typography
+
+                  variant="body1"
+                  display="block"
+                  color="textPrimary"
+                  component="p"
+                  className={`transparent ${classes.content}`}
+                  gutterBottom
+                >
+                  {aboutMe.description}
+                </Typography>
+
+                <Typography
+                  className={classes.footer}
+                  gutterBottom
+
+                >
+                  {aboutMe.footer}
+                </Typography>
+
+                <Divider />
+
+                <Fade left>
+                  <div className={classes.paddingTop}>
+                    {icons.map((icon) => {
+                      return (
+                        <Tooltip
+                          key={icon.label}
+                          title={icon.label}
+                          aria-label="social media"
+                          arrow
+                        >
+                          <IconButton href={icon.link} target="_blank" >
+                            <icon.materialIcon
+                              className={`${classes.iconSpace} ${classes.iconClass}`}
+                              style={{ color: icon.color }}
+                            />
+                          </IconButton>
+                        </Tooltip>
+                      );
+                    })}
+                  </div>
+                  <Tooltip
+                    title="Send an email"
+                    aria-label="social media"
+                    arrow
                   >
-                    {aboutMe.description}
-                  </Typography>
-
-                  <Typography
-                      className={classes.footer}
-                      gutterBottom
-                     
-                    >
-                      {aboutMe.footer}
-                    </Typography>
-
-                    <Divider  />
-
-                    <Fade left>
-                    <div className={classes.paddingTop}>
-                      {icons.map((icon) => {
-                        return (
-                          <Tooltip
-                            key={icon.label}
-                            title={icon.label}
-                            aria-label="social media"
-                            arrow
-                          >
-                            <IconButton href={icon.link} target="_blank" >
-                              <icon.materialIcon
-                                className={`${classes.iconSpace} ${classes.iconClass}`}
-                                style={{ color: icon.color }}
-                              />
-                            </IconButton>
-                          </Tooltip>
-                        );
-                      })}
-                    </div>
-                    <div
-                      className={classes.contact}
+                    <a
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      href="https://mail.google.com/mail/?view=cm&fs=1&to=palad.jarvis@gmail.com"
+                      className={classes.email}
                       style={{ letterSpacing: !fullScreen ? "3px" : "1px" }}
                     >
                       palad.jarvis@gmail.com
-                    </div>
-                    <div
-                      className={classes.contact}
-                      style={{ letterSpacing: !fullScreen ? "3px" : "1px" }}
-                    >
-                      +639212385207
-                    </div>
-                  </Fade>  
+                    </a>
+                  </Tooltip>
+                  <div
+                    className={classes.contact}
+                    style={{ letterSpacing: !fullScreen ? "3px" : "1px" }}
+                  >
+                    +639212385207
+                  </div>
+                </Fade>
               </div>
 
 
 
 
-           
+
 
             </Fade>
           </Grid>

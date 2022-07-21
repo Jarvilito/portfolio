@@ -7,14 +7,13 @@ import FileCopyIcon from "@material-ui/icons/FileCopyOutlined";
 import SaveIcon from "@material-ui/icons/Save";
 import { AuthContext } from "../context/AuthContext";
 import EditIcon from "@material-ui/icons/Edit";
-import { Dialog, DialogActions, IconButton, Tooltip } from "@material-ui/core";
+import { Dialog, IconButton, Tooltip } from "@material-ui/core";
+import AssignmentIcon from '@material-ui/icons/Assignment';
 import AddSkills from "./AddSkills";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import AddTimeline from "./AddTimeline";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
-import ScrollIntoView from "react-scroll-into-view";
-
 import * as Scroll from "react-scroll";
 import {
   Link,
@@ -31,6 +30,13 @@ const useStyles = makeStyles((theme) => ({
     bottom: 40,
     right: 10,
     zIndex: 9999,
+  },
+
+  iconsContainer: {
+    margin: '10px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
 
   speedDialDesktop: {
@@ -82,7 +88,7 @@ export default function OpenIconSpeedDial() {
     setDialogOpen(true);
   };
 
-  const speedDialPosition = () => {};
+  const speedDialPosition = () => { };
 
   const checkIfOnTop = () => {
     if (window.scrollY === 0) {
@@ -93,7 +99,7 @@ export default function OpenIconSpeedDial() {
   const handleDialogClose = () => {
     setDialogOpen(false);
   };
-
+  // NOT USING!
   const SpeedDialShow = () => {
     const isMobile = fullScreen;
     if (!isMobile) {
@@ -179,7 +185,21 @@ export default function OpenIconSpeedDial() {
         ) : (
           ""
         )}
-        <div style={{ margin: "10px" }}>
+        <div className={classes.iconsContainer}>
+          <Tooltip
+            title="Download Resume"
+            arrow
+            placement="left"
+          >
+            <IconButton color="primary"
+              aria-label="add to shopping cart">
+             <a href="https://firebasestorage.googleapis.com/v0/b/jarvis-tech-portfolio.appspot.com/o/Resume.pdf?alt=media&token=129dab87-deb4-453e-bf7d-85927883f392" target="_blank" 
+             rel="noopener noreferrer"
+             download="jarvis_palad_resume"><AssignmentIcon className={classes.iconButton} /></a>
+            </IconButton>
+
+          </Tooltip>
+
           <Tooltip
             title="Back To Top"
             aria-label="back to top"

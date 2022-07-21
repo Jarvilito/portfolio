@@ -17,8 +17,10 @@ import {
   MenuItem,
   ListItemText,
   ListItemIcon,
+  Link,
 } from "@material-ui/core/";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
+import AssignmentIcon from "@material-ui/icons/Assignment";
 import DeveloperModeIcon from "@material-ui/icons/DeveloperMode";
 import CodeIcon from "@material-ui/icons/Code";
 import EventNoteTwoToneIcon from "@material-ui/icons/EventNoteTwoTone";
@@ -143,6 +145,12 @@ function Navbar() {
       label: "Comments",
       id: "comments",
     },
+    {
+      icon: AssignmentIcon,
+      label: "Resume",
+      id: "resume",
+      link: "https://firebasestorage.googleapis.com/v0/b/jarvis-tech-portfolio.appspot.com/o/Resume.pdf?alt=media&token=129dab87-deb4-453e-bf7d-85927883f392"
+    }
   ]);
 
   const handleClick = (e) => {
@@ -153,9 +161,23 @@ function Navbar() {
     setAnchorEl(null);
   };
 
-  const loginLogout = () => {
-    return <Login />;
+  const GetDesktopMenuBtn = (props) => {
+    const menu = props.menu
+    if(menu.id !== 'resume'){
+     return <Button className={classes.padding}>
+      {menu.label}
+    </Button> 
+    } 
+
+    return <Button className={classes.padding} target="_blank" href={menu.link}>{menu.label}</Button>
   };
+
+  const getComponentTypeMenu = (props) => {
+    const menu = props.menu
+    if(menu.link) return <Link target="_blank" href={menu.link} />
+    return 'li'
+
+  }
 
   return (
     <>
@@ -189,9 +211,12 @@ function Navbar() {
                               selector={`#${menu.id}`}
                               key={menu.id}
                             >
-                              <Button className={classes.padding}>
+                              <GetDesktopMenuBtn menu={menu} />
+                              {/* <Button className={classes.padding}>
                                 {menu.label}
                               </Button>
+
+                              <Button target="_blank" href="http://www.google.com/">Google</Button> */}
                             </ScrollIntoView>
                           );
                         })}
@@ -216,7 +241,7 @@ function Navbar() {
                       >
                         {navMenu.map((menu) => {
                           return (
-                            <MenuItem key={menu.id}>
+                            <MenuItem key={menu.id} target="_blank" href={menu.link}>
                               <ScrollIntoView
                                 selector={`#${menu.id}`}
                                 onClick={handleClose}
@@ -229,7 +254,7 @@ function Navbar() {
                                 selector={`#${menu.id}`}
                                 onClick={handleClose}
                               >
-                                <ListItemText primary={menu.label} />
+                                <ListItemText  primary={menu.label} />
                               </ScrollIntoView>
                             </MenuItem>
                           );
@@ -272,7 +297,7 @@ function Navbar() {
                 <img src={laptop2} alt="laptop" className={classes.img}></img>
               </Grid>
             </Grid>
-            <div style={{ marginTop: "500px" }}>
+            <div>
               <AboutMe />
               <Skills />
               <Timeline />

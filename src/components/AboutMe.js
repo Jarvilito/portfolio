@@ -26,8 +26,11 @@ const useStyles = makeStyles((theme) => ({
   root: {
     // height: "100vh",
     // maxHeight: "350px",
-    marginTop: '20%',
+    marginTop: '60vh',
     marginBottom: "200px",
+    [theme.breakpoints.down('sm')]: {
+      marginTop: '20%'
+    }
   },
   title: {
     fontSize: "40px",

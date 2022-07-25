@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import cover5 from "../img/cover5.jpeg";
 import laptop2 from "../img/laptop2.png";
 import { makeStyles } from "@material-ui/core/styles";
@@ -163,19 +163,40 @@ function Navbar() {
 
   const GetDesktopMenuBtn = (props) => {
     const menu = props.menu
-    if(menu.id !== 'resume'){
-     return <Button className={classes.padding}>
-      {menu.label}
-    </Button> 
-    } 
+    if (menu.id !== 'resume') {
+      return <Button className={classes.padding}>
+        {menu.label}
+      </Button>
+    }
 
     return <Button className={classes.padding} target="_blank" href={menu.link}>{menu.label}</Button>
   };
 
-  const getComponentTypeMenu = (props) => {
+
+  const MenuLink = (props) => {
     const menu = props.menu
-    if(menu.link) return <Link target="_blank" href={menu.link} />
-    return 'li'
+    if (menu.link)
+      return <Fragment>
+
+        <ListItemIcon>
+          <a target="_blank" rel="noopener noreferrer" href={menu.link}><menu.icon fontSize="small" /></a>
+        </ListItemIcon>
+        <a target="_blank" rel="noopener noreferrer" href={menu.link}><ListItemText primary={menu.label} /></a>
+
+      </Fragment>
+
+    return <Fragment><ScrollIntoView selector={`#${menu.id}`}
+      onClick={handleClose}>
+      <ListItemIcon>
+        <menu.icon fontSize="small" />
+      </ListItemIcon>
+    </ScrollIntoView>
+      <ScrollIntoView
+        selector={`#${menu.id}`}
+        onClick={handleClose}
+      >
+        <ListItemText primary={menu.label} />
+      </ScrollIntoView></Fragment>
 
   }
 
@@ -241,21 +262,8 @@ function Navbar() {
                       >
                         {navMenu.map((menu) => {
                           return (
-                            <MenuItem key={menu.id} target="_blank" href={menu.link}>
-                              <ScrollIntoView
-                                selector={`#${menu.id}`}
-                                onClick={handleClose}
-                              >
-                                <ListItemIcon>
-                                  <menu.icon fontSize="small" />
-                                </ListItemIcon>
-                              </ScrollIntoView>
-                              <ScrollIntoView
-                                selector={`#${menu.id}`}
-                                onClick={handleClose}
-                              >
-                                <ListItemText  primary={menu.label} />
-                              </ScrollIntoView>
+                            <MenuItem key={menu.id}>
+                              <MenuLink menu={menu} />
                             </MenuItem>
                           );
                         })}

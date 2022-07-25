@@ -78,7 +78,6 @@ const ReplyList = ({ post, replies }) => {
   );
 
   const handleDelete = (id) => {
-    console.log(id);
     axios.delete(`${backendUrl}/reply/${id}`).then((data) => {
       dispatch({
         type: "DELETE_SUCCESS",

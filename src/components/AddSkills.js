@@ -113,7 +113,7 @@ const AddSkills = ({ handleDialogClose, skill }) => {
           axios
             .post(`${backendUrl}/skills/update/${skill._id}`, formSkill)
             .then((res) => {
-              console.log(res);
+
               handleDialogClose();
 
               dispatch({

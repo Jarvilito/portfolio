@@ -65,7 +65,7 @@ const AddComment = ({ type, commentEdit }) => {
       axios
         .post(`${backendUrl}/comments/add`, comment)
         .then((res) => {
-          // console.log(res.data);
+   
 
           dispatch({
             type: "ADD_SUCCESS",
@@ -102,7 +102,7 @@ const AddComment = ({ type, commentEdit }) => {
       axios
         .post(`${backendUrl}/comments/update/${commentEdit._id}`, comment)
         .then((res) => {
-          // console.log(res.data);
+
 
           dispatch({
             type: "EDIT_SUCCESS",
@@ -139,7 +139,6 @@ const AddComment = ({ type, commentEdit }) => {
   };
 
   useEffect(() => {
-    console.log(user);
     setComment({
       ...comment,
       postedBy: user.displayName,

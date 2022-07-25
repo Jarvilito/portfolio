@@ -306,7 +306,7 @@ function Navbar() {
               </Grid>
             </Grid>
             <div>
-              <AboutMe />
+              <AboutMe id="aboutMe"/>
               <Skills />
               <Timeline />
               <Hobby />

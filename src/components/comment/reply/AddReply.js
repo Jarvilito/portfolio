@@ -74,7 +74,6 @@ const AddReply = ({ checked, post }) => {
     axios
       .post(`${backendUrl}/reply/add`, reply)
       .then((res) => {
-        // console.log(res.data);
 
         dispatch({
           type: "ADD_SUCCESS",

@@ -19,7 +19,6 @@ const AuthContextProvider = (props) => {
         .then((userDetail) => {
           const userData = userDetail.data;
           if (Object.keys(userData).length) {
-            console.log(userData);
             userDispatch({ type: "FACEBOOK_LOGIN", payload: userData });
             localStorage.setItem("user", JSON.stringify(userData));
 
@@ -39,7 +38,6 @@ const AuthContextProvider = (props) => {
           }
         })
         .catch((err) => {
-          console.log(err);
           snackbarDispatch({
             type: "OPEN_SNACKBAR",
             payload: {
@@ -49,7 +47,6 @@ const AuthContextProvider = (props) => {
           });
         });
     } else {
-      console.log(JSON.parse(localUser));
       userDispatch({
         type: "SET_LOCAL_STORAGE_USER",
         payload: JSON.parse(localUser),

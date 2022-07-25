@@ -47,13 +47,7 @@ const Login = ({ type }) => {
 
   const { snackbar, snackbarDispatch } = useContext(AlertContext);
 
-  useEffect(() => {
-    if (process.env.NODE_ENV === "development") {
-      console.log("development only");
-    } else {
-      console.log("production");
-    }
-  }, []);
+
 
   const handleLogin = (e) => {
     if (Object.keys(user).length) {
@@ -92,7 +86,7 @@ const Login = ({ type }) => {
       )}
 
       <Dialog
-        fullScreen={matches}
+        // fullScreen={matches}
         TransitionComponent={Transition}
         open={dialogOpen}
         onClose={() => setDialogOpen(!dialogOpen)}

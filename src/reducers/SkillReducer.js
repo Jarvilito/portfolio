@@ -6,7 +6,6 @@ export const skillReducer = (state, action) => {
     case "FETCH_SUCCESS":
       return action.payload;
     case "FETCH_ERROR":
-      console.log(action.payload);
       return;
     case "ADD_SUCCESS":
       return [...state, action.payload];

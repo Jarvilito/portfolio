@@ -38,7 +38,6 @@ const Reply = ({ post }) => {
     axios.get(`${backendUrl}/reply`).then(async (data) => {
       const replies = data.data;
 
-      console.log(replies);
 
       dispatch({ type: "FETCH_SUCCESS", payload: replies });
     });

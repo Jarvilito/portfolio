@@ -59,7 +59,7 @@ const AddTimeline = ({ handleDialogClose, timeline }) => {
   // },[])
 
   const formInitialState = () => {
-    console.log(timeline);
+
     if (timeline) {
       let linkDisplay = {
         url: "",
@@ -182,14 +182,13 @@ const AddTimeline = ({ handleDialogClose, timeline }) => {
           break;
 
         case "EDIT_TIMELINE":
-          console.log(formTimeline);
+
           axios
             .post(
               `${backendUrl}/timelines/update/${timeline._id}`,
               formTimeline
             )
             .then((res) => {
-              console.log(res);
               handleDialogClose();
 
               dispatch({

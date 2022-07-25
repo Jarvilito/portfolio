@@ -9,7 +9,6 @@ const SkillContextProvider = (props) => {
   const [skills, dispatch] = useReducer(skillReducer, []);
 
   useEffect(() => {
-    console.log("effect use");
     axios
       .get(`${backendUrl}/skills`)
       .then((data) => {

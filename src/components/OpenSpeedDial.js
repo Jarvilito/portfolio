@@ -88,13 +88,6 @@ export default function OpenIconSpeedDial() {
     setDialogOpen(true);
   };
 
-  const speedDialPosition = () => { };
-
-  const checkIfOnTop = () => {
-    if (window.scrollY === 0) {
-      console.log("im at top");
-    }
-  };
 
   const handleDialogClose = () => {
     setDialogOpen(false);

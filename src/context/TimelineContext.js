@@ -23,7 +23,6 @@ const TimelineContextProvider = (props) => {
     axios
       .get(`${backendUrl}/timelines`)
       .then((data) => {
-        console.log(data);
         const timelines = data.data;
 
         dispatch({ type: "FETCH_SUCCESS", payload: timelines });

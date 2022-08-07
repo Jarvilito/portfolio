@@ -149,7 +149,7 @@ function Navbar() {
       icon: AssignmentIcon,
       label: "Resume",
       id: "resume",
-      link: "https://firebasestorage.googleapis.com/v0/b/jarvis-tech-portfolio.appspot.com/o/Resume.pdf?alt=media&token=129dab87-deb4-453e-bf7d-85927883f392"
+      link: "https://firebasestorage.googleapis.com/v0/b/jarvis-tech-portfolio.appspot.com/o/UpdatedResume_JarvisLorenzPalad.pdf?alt=media&token=e213a5b3-1437-4583-9745-9a4e3de49d3d"
     }
   ]);
 

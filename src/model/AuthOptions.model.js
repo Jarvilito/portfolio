@@ -17,12 +17,12 @@ export const authOptions = [
     color: "#424242",
     icon: GitHubIcon,
   },
-  // {
-  //   label: "Instagram",
-  //   url: `${backendUrl}/auth/instagram`,
-  //   color: "#c62828",
-  //   icon: InstagramIcon,
-  // },
+  {
+    label: "Instagram",
+    url: `${backendUrl}/auth/instagram`,
+    color: "#c62828",
+    icon: InstagramIcon,
+  },
   {
     label: "Google",
     url: `${backendUrl}/auth/google`,

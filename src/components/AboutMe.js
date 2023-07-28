@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import { formatDistance } from "date-fns";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import {
@@ -19,15 +19,21 @@ import InstagramIcon from "@material-ui/icons/Instagram";
 import LinkedInIcon from "@material-ui/icons/LinkedIn";
 import YouTubeIcon from "@material-ui/icons/YouTube";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import JarvisCover from "../img/profile.jpg";
 import ComponentTitle from "./ComponentTitle";
+import {
+  ref,
+  getDownloadURL,
+  listAll,
+} from "firebase/storage";
+import { storage } from "../model/Firebase.model";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
     // height: "100vh",
     // maxHeight: "350px",
-    marginTop: '60vh',
-    marginBottom: "200px",
+    marginTop: '33vh',
+    marginBottom: "150px",
     [theme.breakpoints.down('sm')]: {
       marginTop: '20%'
     }
@@ -71,6 +77,9 @@ const useStyles = makeStyles((theme) => ({
 
   iconClass: {
     fontSize: "6rem",
+    [theme.breakpoints.down('sm')]: {
+      fontSize: "5rem",
+    }
   },
   footer: {
     fontSize: "2rem",
@@ -110,9 +119,13 @@ const useStyles = makeStyles((theme) => ({
 
   container: {
     borderRadius: '15px',
-    marginLeft: '20px',
+    
     display: 'flex',
     flexDirection: 'column',
+
+    [theme.breakpoints.up('md')]: {
+      marginLeft: '5rem',
+    }
   },
 
   containerTitle: {
@@ -123,13 +136,30 @@ const useStyles = makeStyles((theme) => ({
 
 
   paddingTop: {
-    paddingTop: '20px',
+    paddingTop: '1rem',
+    paddingBottom: '1rem',
+    marginLeft: '-12px',
+    marginRight: '-12px',
+    [theme.breakpoints.down('sm')]: {
+      margin: '0 auto',
+    }
   }
 
 
 }));
 
 function AboutMe() {
+  const imagesListRef = ref(storage, "profile/");
+  const [profilePicture, setProfilePicture] = useState(null);
+
+  useEffect(() => {
+    listAll(imagesListRef).then((response) => {
+      getDownloadURL(response.items[0]).then((url) => {
+        setProfilePicture(url);
+      })
+    });
+  }, []);
+
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const classes = useStyles();
@@ -154,13 +184,6 @@ function AboutMe() {
       materialIcon: LinkedInIcon,
       link: "https://www.linkedin.com/in/jarvis-palad-632595171/",
     },
-    {
-      label: "YouTube",
-      color: "red",
-      materialIcon: YouTubeIcon,
-      link:
-        "https://www.youtube.com/channel/UCjKXPVlP8ew6dQF3XHo6i9Q/featured?view_as=subscriber",
-    },
   ]);
 
   const yearOfExp = formatDistance(new Date(), new Date(2017, 2, 8));
@@ -178,7 +201,7 @@ function AboutMe() {
       <Container maxWidth="lg">
         <Grid container justify="center">
           <Grid item sm={12} md={5}>
-            <Avatar alt="Jarvis Palad Profile" src={JarvisCover} className={classes.coverPhoto} variant="rounded" />
+            <Avatar alt="Jarvis Palad Profile" src={profilePicture} className={classes.coverPhoto} variant="rounded" />
           </Grid>
 
           <Grid sm={12} md={7} item>
@@ -209,7 +232,7 @@ function AboutMe() {
                 <Divider />
 
                 <Fade left>
-                  <div className={classes.paddingTop}>
+                  <Grid container spacing={3} className={`${classes.paddingTop}`}>
                     {icons.map((icon) => {
                       return (
                         <Tooltip
@@ -227,7 +250,7 @@ function AboutMe() {
                         </Tooltip>
                       );
                     })}
-                  </div>
+                  </Grid>
                   <Tooltip
                     title="Send an email"
                     aria-label="social media"
@@ -251,12 +274,6 @@ function AboutMe() {
                   </div>
                 </Fade>
               </div>
-
-
-
-
-
-
             </Fade>
           </Grid>
         </Grid>

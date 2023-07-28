@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import cover5 from "../img/cover5.jpeg";
 import laptop2 from "../img/laptop2.png";
 import { makeStyles } from "@material-ui/core/styles";
@@ -39,6 +39,15 @@ import Login from "./auth/Login";
 import CommentIcon from "@material-ui/icons/Comment";
 import Comment from "./comment/Comment";
 // import { Footer } from "./Footer";
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  listAll,
+  list,
+} from "firebase/storage";
+import { storage } from "../model/Firebase.model";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -115,7 +124,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Navbar() {
+  const imagesListRef = ref(storage, "pdf/");
+
+
   const classes = useStyles();
+
+  const [resumeUrl, setResumeUrl] = useState(null);
 
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -149,9 +163,17 @@ function Navbar() {
       icon: AssignmentIcon,
       label: "Resume",
       id: "resume",
-      link: "https://firebasestorage.googleapis.com/v0/b/jarvis-tech-portfolio.appspot.com/o/UpdatedResume_JarvisLorenzPalad.pdf?alt=media&token=e213a5b3-1437-4583-9745-9a4e3de49d3d"
+      link: true,
     }
   ]);
+
+  useEffect(() => {
+    listAll(imagesListRef).then((response) => {
+      getDownloadURL(response.items[0]).then((url) => {
+        setResumeUrl(url);
+      })
+    });
+  }, []);
 
   const handleClick = (e) => {
     setAnchorEl(e.currentTarget);
@@ -169,23 +191,23 @@ function Navbar() {
       </Button>
     }
 
-    return <Button className={classes.padding} target="_blank" href={menu.link}>{menu.label}</Button>
+    return <Button className={classes.padding} target="_blank" href={resumeUrl}>{menu.label}</Button>
   };
-
 
   const MenuLink = (props) => {
     const menu = props.menu
     if (menu.link)
-      return <Fragment>
+        return <Fragment>
 
-        <ListItemIcon>
-          <a target="_blank" rel="noopener noreferrer" href={menu.link}><menu.icon fontSize="small" /></a>
-        </ListItemIcon>
-        <a target="_blank" rel="noopener noreferrer" href={menu.link}><ListItemText primary={menu.label} /></a>
+          <ListItemIcon>
+            <a target="_blank" rel="noopener noreferrer" href={resumeUrl}><menu.icon fontSize="small" /></a>
+          </ListItemIcon>
+          <a target="_blank" rel="noopener noreferrer" href={resumeUrl}><ListItemText primary={menu.label} /></a>
 
       </Fragment>
 
-    return <Fragment><ScrollIntoView selector={`#${menu.id}`}
+    return <Fragment>
+    <ScrollIntoView selector={`#${menu.id}`}
       onClick={handleClose}>
       <ListItemIcon>
         <menu.icon fontSize="small" />
@@ -198,6 +220,26 @@ function Navbar() {
         <ListItemText primary={menu.label} />
       </ScrollIntoView></Fragment>
 
+  }
+
+  const renderMenus = () => {
+    return navMenu.map( menu => {
+        if(menu.id === 'resume') return (<GetDesktopMenuBtn key="{menu.id}" menu={menu} />);
+        return (
+          
+          <ScrollIntoView
+            selector={`#${menu.id}`}
+            key={menu.id}
+          >
+            <GetDesktopMenuBtn menu={menu} />
+            {/* <Button className={classes.padding}>
+              {menu.label}
+            </Button>
+
+            <Button target="_blank" href="http://www.google.com/">Google</Button> */}
+          </ScrollIntoView>
+        );
+    })
   }
 
   return (
@@ -226,21 +268,7 @@ function Navbar() {
                     </div>
                     <Hidden smDown>
                       <div className={classes.container}>
-                        {navMenu.map((menu) => {
-                          return (
-                            <ScrollIntoView
-                              selector={`#${menu.id}`}
-                              key={menu.id}
-                            >
-                              <GetDesktopMenuBtn menu={menu} />
-                              {/* <Button className={classes.padding}>
-                                {menu.label}
-                              </Button>
-
-                              <Button target="_blank" href="http://www.google.com/">Google</Button> */}
-                            </ScrollIntoView>
-                          );
-                        })}
+                        {renderMenus()}
                         <Login />
                       </div>
                     </Hidden>

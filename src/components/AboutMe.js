@@ -3,8 +3,6 @@ import { formatDistance } from "date-fns";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import {
   Grid,
-  Card,
-  CardContent,
   Typography,
   Avatar,
   IconButton,
@@ -12,14 +10,11 @@ import {
   Container,
   Tooltip,
 } from "@material-ui/core/";
-import { spacing } from '@material-ui/system';
 import Fade from "react-reveal/Fade";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import InstagramIcon from "@material-ui/icons/Instagram";
 import LinkedInIcon from "@material-ui/icons/LinkedIn";
-import YouTubeIcon from "@material-ui/icons/YouTube";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import ComponentTitle from "./ComponentTitle";
 import {
   ref,
   getDownloadURL,
@@ -129,7 +124,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     gap: '1rem',
-    fontSize: '3rem',
+    fontSize: '2rem',
     letterSpacing: '3px',
     margin: '20px 0',
   },

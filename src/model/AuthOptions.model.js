@@ -1,5 +1,4 @@
 import { backendUrl } from "./Backend.model";
-import FacebookIcon from "@material-ui/icons/Facebook";
 import GitHubIcon from "@material-ui/icons/GitHub";
 import EmailIcon from "@material-ui/icons/Email";
 

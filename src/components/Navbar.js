@@ -1,6 +1,4 @@
 import React, { Fragment, useState, useEffect } from "react";
-import cover5 from "../img/cover5.jpeg";
-import laptop2 from "../img/laptop2.png";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   AppBar,
@@ -17,7 +15,6 @@ import {
   MenuItem,
   ListItemText,
   ListItemIcon,
-  Link,
 } from "@material-ui/core/";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import AssignmentIcon from "@material-ui/icons/Assignment";
@@ -25,9 +22,7 @@ import DeveloperModeIcon from "@material-ui/icons/DeveloperMode";
 import CodeIcon from "@material-ui/icons/Code";
 import EventNoteTwoToneIcon from "@material-ui/icons/EventNoteTwoTone";
 import SportsEsportsTwoToneIcon from "@material-ui/icons/SportsEsportsTwoTone";
-import PhotoLibraryTwoToneIcon from "@material-ui/icons/PhotoLibraryTwoTone";
 import Fade from "react-reveal/Fade";
-import Swing from "react-reveal/Swing";
 import ScrollIntoView from "react-scroll-into-view";
 import AboutMe from "./AboutMe";
 import Skills from "./Skills";
@@ -41,10 +36,8 @@ import Comment from "./comment/Comment";
 // import { Footer } from "./Footer";
 import {
   ref,
-  uploadBytes,
   getDownloadURL,
   listAll,
-  list,
 } from "firebase/storage";
 import { storage } from "../model/Firebase.model";
 import Axios from "axios";

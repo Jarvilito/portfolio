@@ -1,6 +1,6 @@
 const prod = "https://webservice-api-jarvis-portfolio.onrender.com";
 
-const local = "https://webservice-api-jarvis-portfolio.onrender.com";
+const local = "http://localhost:5001";
 
 let backend;
 

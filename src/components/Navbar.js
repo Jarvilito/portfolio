@@ -47,6 +47,7 @@ import {
   list,
 } from "firebase/storage";
 import { storage } from "../model/Firebase.model";
+import Axios from "axios";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -60,6 +61,7 @@ const useStyles = makeStyles((theme) => ({
   trasparent: {
     background: "transparent",
   },
+  
 
   menuWidth: {
     minWidth: "250px",
@@ -68,6 +70,7 @@ const useStyles = makeStyles((theme) => ({
   toolBar: {
     display: "flex",
     justifyContent: "space-between",
+    alignItems: 'center',
   },
 
   leftMenu: {
@@ -90,6 +93,10 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(2),
     color: "#f0efed",
     fontWeight: "600",
+    [theme.breakpoints.down('md')]: {
+      padding: theme.spacing(2),
+      margin: theme.spacing(1),
+    }
   },
 
   img: {
@@ -101,13 +108,15 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     color: "#f5f5f5",
     letterSpacing: "2px",
+    fontWeight: 'bolder',
   },
 
   quoteAuthor: {
     textAlign: "center",
     color: "#f5f5f5",
     letterSpacing: "2px",
-    fontSize: "1.2em",
+    fontSize: "1.5em",
+    fontWeight: 'bolder',
   },
 
   whiteColor: {
@@ -123,6 +132,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const initialQuote = {
+  quote: 'Failure is an option here. If things are not failing, you are not innovating enough.',
+  author: 'Elon Musk',
+}
 function Navbar() {
   const imagesListRef = ref(storage, "pdf/");
 
@@ -130,6 +143,9 @@ function Navbar() {
   const classes = useStyles();
 
   const [resumeUrl, setResumeUrl] = useState(null);
+
+  const [quote, setQuote] = useState(initialQuote)
+  
 
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -167,7 +183,24 @@ function Navbar() {
     }
   ]);
 
+  const getQuote = async () => {
+
+    try {
+      const { data } = await Axios.get('https://quoteslate.vercel.app/api/quotes/random?tags=life,wisdom,motivation');
+      setQuote({
+        quote: data.quote,
+        author: data.author,
+      })
+      
+    }
+
+    catch (error) {
+      console.log(error);
+    }
+  }
+
   useEffect(() => {
+    getQuote();
     listAll(imagesListRef).then((response) => {
       getDownloadURL(response.items[0]).then((url) => {
         setResumeUrl(url);
@@ -191,7 +224,7 @@ function Navbar() {
       </Button>
     }
 
-    return <Button className={classes.padding} target="_blank" href={resumeUrl}>{menu.label}</Button>
+    return <Button style={{display: 'flex'}} className={classes.padding} target="_blank" href={resumeUrl}>{menu.label}</Button>
   };
 
   const MenuLink = (props) => {
@@ -228,15 +261,11 @@ function Navbar() {
         return (
           
           <ScrollIntoView
+            style={{ display: 'flex'}}
             selector={`#${menu.id}`}
             key={menu.id}
           >
             <GetDesktopMenuBtn menu={menu} />
-            {/* <Button className={classes.padding}>
-              {menu.label}
-            </Button>
-
-            <Button target="_blank" href="http://www.google.com/">Google</Button> */}
           </ScrollIntoView>
         );
     })
@@ -305,17 +334,16 @@ function Navbar() {
                 </AppBar>
               </Grid>
             </Grid>
-            <Grid container alignItems="center" justify="center" spacing={0}>
+            <Grid style={{ minHeight: 'calc(100vh - 130px', marginTop: '10rem'}} container justify="center" spacing={0}>
               <Grid item xs={12} md={6}>
                 <Fade bottom delay={1000}>
-                  <Paper elevation={0} className={classes.trasparent}>
+                  <Paper elevation={0} className={`${classes.trasparent} banner-quote`}>
                     <Typography
                       variant="h5"
                       className={classes.quote}
                       gutterBottom
                     >
-                      ❝ Failure is an option here. If things are not failing,
-                      you are not innovating enough. ❞
+                      ❝ {quote.quote} ❞
                     </Typography>
                     <Divider variant="middle" className={classes.whiteColor} />
                     <Typography
@@ -324,13 +352,10 @@ function Navbar() {
                       className={classes.quoteAuthor}
                       gutterBottom
                     >
-                      - Elon Musk
+                      - {quote.author}
                     </Typography>
                   </Paper>
                 </Fade>
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <img src={laptop2} alt="laptop" className={classes.img}></img>
               </Grid>
             </Grid>
             <div>

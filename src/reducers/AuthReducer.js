@@ -3,13 +3,13 @@ export const authReducer = (state, action) => {
     case "SET_LOCAL_STORAGE_USER":
       return {
         ...action.payload,
-        isAdmin: action.payload.id === "10213404945397310" ? true : false,
+        isAdmin: (action.payload.id === "111421477585612615514" && action.payload.displayName === 'Jarvis') ? true : false,
       };
     case "FACEBOOK_LOGIN":
       return {
         ...state,
         ...action.payload,
-        isAdmin: action.payload.id === "10213404945397310" ? true : false,
+        isAdmin: (action.payload.id === "111421477585612615514" && action.payload.displayName === 'Jarvis')  ? true : false,
       };
 
     case "LOGOUT":

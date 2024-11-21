@@ -32,11 +32,8 @@ const useStyles = makeStyles((theme) => ({
   root: {
     // height: "100vh",
     // maxHeight: "350px",
-    marginTop: '33vh',
+    paddingTop: '2rem',
     marginBottom: "150px",
-    [theme.breakpoints.down('sm')]: {
-      marginTop: '20%'
-    }
   },
   title: {
     fontSize: "40px",
@@ -129,6 +126,9 @@ const useStyles = makeStyles((theme) => ({
   },
 
   containerTitle: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '1rem',
     fontSize: '3rem',
     letterSpacing: '3px',
     margin: '20px 0',
@@ -150,13 +150,26 @@ const useStyles = makeStyles((theme) => ({
 
 function AboutMe() {
   const imagesListRef = ref(storage, "profile/");
-  const [profilePicture, setProfilePicture] = useState(null);
+  const [profileDesktop, setProfileDesktop] = useState(null);
+  const [profileMobile, setProfileMobile] = useState(null);
 
   useEffect(() => {
     listAll(imagesListRef).then((response) => {
-      getDownloadURL(response.items[0]).then((url) => {
-        setProfilePicture(url);
-      })
+      response.items.forEach((item) => {
+        // Use fullPath to get the storage path
+        const pathName = item.fullPath;
+
+        // Determine if the path contains "desktop" or "mobile"
+        if (pathName.includes("desktop")) {
+          getDownloadURL(item).then((url) => {
+            setProfileDesktop(url); // Set the URL for desktop
+          });
+        } else if (pathName.includes("mobile")) {
+          getDownloadURL(item).then((url) => {
+            setProfileMobile(url); // Set the URL for mobile
+          });
+        }
+      });
     });
   }, []);
 
@@ -192,22 +205,25 @@ function AboutMe() {
 
   const [aboutMe] = useState({
     header: "About Me",
-    description: `Hi, I am Jarvis Lorenz De Villa Palad, web / mobile app developer, born in Philippines. Living in Quezon City. With ${yearOfExp} experience on web development, and ${mobileYearofExp} experience on cross platform development. Welcome to my portfolio. Keep scrolling to know more about me`,
+    description: `Hi, I am Jarvis Lorenz De Villa Palad, web / mobile app developer, born in Philippines. Living in Mandaluyong City. With ${yearOfExp} experience on web development, and ${mobileYearofExp} experience on cross platform development. Welcome to my portfolio. Keep scrolling to know more about me`,
     footer: "Connect with me",
   });
   return (
     <div className={classes.root} id="aboutMe">
 
-      <Container maxWidth="lg">
+      <Container maxWidth="lg" className="about-me">
         <Grid container justify="center">
-          <Grid item sm={12} md={5}>
-            <Avatar alt="Jarvis Palad Profile" src={profilePicture} className={classes.coverPhoto} variant="rounded" />
+          <Grid item sm={12} md={5} className="cover-photo--desktop">
+            <Avatar alt="Jarvis Palad Profile" src={profileDesktop} className={`${classes.coverPhoto}`} variant="rounded" />
           </Grid>
 
           <Grid sm={12} md={7} item>
             <Fade bottom>
               <div className={classes.container}>
-                <span className={classes.containerTitle}>About me</span>
+                <h1 className={classes.containerTitle}>
+                <Avatar alt="Jarvis Palad" src={profileMobile} className="cover-photo cover-photo--mobile"/>
+                  About me
+                </h1>
                 <Divider />
                 <Typography
 
@@ -270,7 +286,7 @@ function AboutMe() {
                     className={classes.contact}
                     style={{ letterSpacing: !fullScreen ? "3px" : "1px" }}
                   >
-                    +639212385207
+                    +639760278915
                   </div>
                 </Fade>
               </div>

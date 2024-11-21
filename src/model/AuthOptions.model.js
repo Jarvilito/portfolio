@@ -5,10 +5,10 @@ import EmailIcon from "@material-ui/icons/Email";
 
 export const authOptions = [
   {
-    label: "Facebook",
-    url: `${backendUrl}/auth/facebook`,
-    color: "#3b5998",
-    icon: FacebookIcon,
+    label: "Google",
+    url: `${backendUrl}/auth/google`,
+    color: "#e57373",
+    icon: EmailIcon,
   },
   {
     label: "GitHub",
@@ -16,10 +16,5 @@ export const authOptions = [
     color: "#424242",
     icon: GitHubIcon,
   },
-  {
-    label: "Google",
-    url: `${backendUrl}/auth/google`,
-    color: "#e57373",
-    icon: EmailIcon,
-  },
+
 ];

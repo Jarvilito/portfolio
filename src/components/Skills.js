@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from "react";
-import { Container, Grid, Typography, Divider } from "@material-ui/core/";
+import { Container, Grid, Typography, Divider, Box } from "@material-ui/core/";
 import { makeStyles } from "@material-ui/core/styles";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
@@ -10,6 +10,7 @@ import { SkillContext } from "../context/SkillContext";
 import SkillDetails from "./SkillDetails";
 import { AlertContext } from "../context/AlertContext";
 import ComponentTitle from "./ComponentTitle";
+import { Skeleton } from "@material-ui/lab";
 
 const useStyle = makeStyles((theme) => ({
   root: {
@@ -103,17 +104,44 @@ const Skills = () => {
         </div>
 
         <Fade left>
-          <Grid container className={classes.margin} justify="center">
-            {languages.map((skill) => {
-              return (
-                <SkillDetails
-                  key={skill._id}
-                  skill={skill}
-                  progressColor={progressColor}
-                />
-              );
-            })}
-          </Grid>
+
+          { !languages.length ? (
+            <Box
+            style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(3, 1fr)', // 3 items per row
+            gap: '1.5rem', // Spacing between items
+            marginTop: '2rem'
+            }}
+          >
+            {Array.from({ length: 6 }).map((_, index) => (
+              <Skeleton
+                key={index}
+                sx={{ bgcolor: 'grey.1200' }}
+                width={'100%'}
+                height={118}
+                animation="wave"
+              />
+            ))}
+          </Box>
+          )
+        
+          : (
+
+            <Grid container className={classes.margin} justify="center">
+              {languages.map((skill) => {
+                return (
+                  <SkillDetails
+                    key={skill._id}
+                    skill={skill}
+                    progressColor={progressColor}
+                  />
+                );
+              })}
+            </Grid>
+          )}
+          
+        
         </Fade>
         <Divider variant="middle" />
       </Container>
@@ -127,7 +155,27 @@ const Skills = () => {
             Frameworks/Libraries
           </Typography>
         </div>
-        <Fade left>
+        { !frameworks.length ? (
+        <Box
+          style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(3, 1fr)', // 3 items per row
+          gap: '1.5rem', // Spacing between items
+          marginTop: '2rem'
+          }}
+          >
+            {Array.from({ length: 6 }).map((_, index) => (
+              <Skeleton
+                key={index}
+                sx={{ bgcolor: 'grey.1200' }}
+                width={'100%'}
+                height={118}
+                animation="wave"
+              />
+            ))}
+        </Box>
+        ) : (
+
           <Grid container className={classes.margin} justify="center">
             {frameworks.map((framework) => {
               return (
@@ -139,7 +187,9 @@ const Skills = () => {
               );
             })}
           </Grid>
-        </Fade>
+        )}
+
+
       </Container>
     </div>
   );

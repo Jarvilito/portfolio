@@ -1,6 +1,4 @@
-import React, { Fragment, useState } from "react";
-import cover5 from "../img/cover5.jpeg";
-import laptop2 from "../img/laptop2.png";
+import React, { Fragment, useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   AppBar,
@@ -17,7 +15,6 @@ import {
   MenuItem,
   ListItemText,
   ListItemIcon,
-  Link,
 } from "@material-ui/core/";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import AssignmentIcon from "@material-ui/icons/Assignment";
@@ -25,9 +22,7 @@ import DeveloperModeIcon from "@material-ui/icons/DeveloperMode";
 import CodeIcon from "@material-ui/icons/Code";
 import EventNoteTwoToneIcon from "@material-ui/icons/EventNoteTwoTone";
 import SportsEsportsTwoToneIcon from "@material-ui/icons/SportsEsportsTwoTone";
-import PhotoLibraryTwoToneIcon from "@material-ui/icons/PhotoLibraryTwoTone";
 import Fade from "react-reveal/Fade";
-import Swing from "react-reveal/Swing";
 import ScrollIntoView from "react-scroll-into-view";
 import AboutMe from "./AboutMe";
 import Skills from "./Skills";
@@ -39,6 +34,14 @@ import Login from "./auth/Login";
 import CommentIcon from "@material-ui/icons/Comment";
 import Comment from "./comment/Comment";
 // import { Footer } from "./Footer";
+import {
+  ref,
+  getDownloadURL,
+  listAll,
+} from "firebase/storage";
+import { storage } from "../model/Firebase.model";
+import Axios from "axios";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,6 +54,7 @@ const useStyles = makeStyles((theme) => ({
   trasparent: {
     background: "transparent",
   },
+  
 
   menuWidth: {
     minWidth: "250px",
@@ -59,6 +63,7 @@ const useStyles = makeStyles((theme) => ({
   toolBar: {
     display: "flex",
     justifyContent: "space-between",
+    alignItems: 'center',
   },
 
   leftMenu: {
@@ -81,6 +86,10 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(2),
     color: "#f0efed",
     fontWeight: "600",
+    [theme.breakpoints.down('md')]: {
+      padding: theme.spacing(2),
+      margin: theme.spacing(1),
+    }
   },
 
   img: {
@@ -92,13 +101,15 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     color: "#f5f5f5",
     letterSpacing: "2px",
+    fontWeight: 'bolder',
   },
 
   quoteAuthor: {
     textAlign: "center",
     color: "#f5f5f5",
     letterSpacing: "2px",
-    fontSize: "1.2em",
+    fontSize: "1.5em",
+    fontWeight: 'bolder',
   },
 
   whiteColor: {
@@ -114,8 +125,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const initialQuote = {
+  quote: 'Failure is an option here. If things are not failing, you are not innovating enough.',
+  author: 'Elon Musk',
+}
 function Navbar() {
+  const imagesListRef = ref(storage, "pdf/");
+
+
   const classes = useStyles();
+
+  const [resumeUrl, setResumeUrl] = useState(null);
+
+  const [quote, setQuote] = useState(initialQuote)
+  
 
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -149,9 +172,34 @@ function Navbar() {
       icon: AssignmentIcon,
       label: "Resume",
       id: "resume",
-      link: "https://firebasestorage.googleapis.com/v0/b/jarvis-tech-portfolio.appspot.com/o/UpdatedResume_JarvisLorenzPalad.pdf?alt=media&token=5cb17234-4ded-4fa1-90e0-aa452be5a980"
+      link: true,
     }
   ]);
+
+  const getQuote = async () => {
+
+    try {
+      const { data } = await Axios.get('https://quoteslate.vercel.app/api/quotes/random?tags=life,wisdom,motivation');
+      setQuote({
+        quote: data.quote,
+        author: data.author,
+      })
+      
+    }
+
+    catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    getQuote();
+    listAll(imagesListRef).then((response) => {
+      getDownloadURL(response.items[0]).then((url) => {
+        setResumeUrl(url);
+      })
+    });
+  }, []);
 
   const handleClick = (e) => {
     setAnchorEl(e.currentTarget);
@@ -169,23 +217,23 @@ function Navbar() {
       </Button>
     }
 
-    return <Button className={classes.padding} target="_blank" href={menu.link}>{menu.label}</Button>
+    return <Button style={{display: 'flex'}} className={classes.padding} target="_blank" href={resumeUrl}>{menu.label}</Button>
   };
-
 
   const MenuLink = (props) => {
     const menu = props.menu
     if (menu.link)
-      return <Fragment>
+        return <Fragment>
 
-        <ListItemIcon>
-          <a target="_blank" rel="noopener noreferrer" href={menu.link}><menu.icon fontSize="small" /></a>
-        </ListItemIcon>
-        <a target="_blank" rel="noopener noreferrer" href={menu.link}><ListItemText primary={menu.label} /></a>
+          <ListItemIcon>
+            <a target="_blank" rel="noopener noreferrer" href={resumeUrl}><menu.icon fontSize="small" /></a>
+          </ListItemIcon>
+          <a target="_blank" rel="noopener noreferrer" href={resumeUrl}><ListItemText primary={menu.label} /></a>
 
       </Fragment>
 
-    return <Fragment><ScrollIntoView selector={`#${menu.id}`}
+    return <Fragment>
+    <ScrollIntoView selector={`#${menu.id}`}
       onClick={handleClose}>
       <ListItemIcon>
         <menu.icon fontSize="small" />
@@ -198,6 +246,22 @@ function Navbar() {
         <ListItemText primary={menu.label} />
       </ScrollIntoView></Fragment>
 
+  }
+
+  const renderMenus = () => {
+    return navMenu.map( menu => {
+        if(menu.id === 'resume') return (<GetDesktopMenuBtn key="{menu.id}" menu={menu} />);
+        return (
+          
+          <ScrollIntoView
+            style={{ display: 'flex'}}
+            selector={`#${menu.id}`}
+            key={menu.id}
+          >
+            <GetDesktopMenuBtn menu={menu} />
+          </ScrollIntoView>
+        );
+    })
   }
 
   return (
@@ -226,21 +290,7 @@ function Navbar() {
                     </div>
                     <Hidden smDown>
                       <div className={classes.container}>
-                        {navMenu.map((menu) => {
-                          return (
-                            <ScrollIntoView
-                              selector={`#${menu.id}`}
-                              key={menu.id}
-                            >
-                              <GetDesktopMenuBtn menu={menu} />
-                              {/* <Button className={classes.padding}>
-                                {menu.label}
-                              </Button>
-
-                              <Button target="_blank" href="http://www.google.com/">Google</Button> */}
-                            </ScrollIntoView>
-                          );
-                        })}
+                        {renderMenus()}
                         <Login />
                       </div>
                     </Hidden>
@@ -277,17 +327,16 @@ function Navbar() {
                 </AppBar>
               </Grid>
             </Grid>
-            <Grid container alignItems="center" justify="center" spacing={0}>
+            <Grid style={{ minHeight: 'calc(100vh - 130px', marginTop: '10rem'}} container justify="center" spacing={0}>
               <Grid item xs={12} md={6}>
                 <Fade bottom delay={1000}>
-                  <Paper elevation={0} className={classes.trasparent}>
+                  <Paper elevation={0} className={`${classes.trasparent} banner-quote`}>
                     <Typography
                       variant="h5"
                       className={classes.quote}
                       gutterBottom
                     >
-                      ❝ Failure is an option here. If things are not failing,
-                      you are not innovating enough. ❞
+                      ❝ {quote.quote} ❞
                     </Typography>
                     <Divider variant="middle" className={classes.whiteColor} />
                     <Typography
@@ -296,13 +345,10 @@ function Navbar() {
                       className={classes.quoteAuthor}
                       gutterBottom
                     >
-                      - Elon Musk
+                      - {quote.author}
                     </Typography>
                   </Paper>
                 </Fade>
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <img src={laptop2} alt="laptop" className={classes.img}></img>
               </Grid>
             </Grid>
             <div>

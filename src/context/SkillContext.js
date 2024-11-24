@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useEffect, useContext } from "react";
+import React, { createContext, useReducer, useEffect } from "react";
 import axios from "axios";
 import { skillReducer } from "../reducers/SkillReducer";
 import { backendUrl } from "../model/Backend.model";
@@ -7,6 +7,7 @@ export const SkillContext = createContext();
 
 const SkillContextProvider = (props) => {
   const [skills, dispatch] = useReducer(skillReducer, []);
+
 
   useEffect(() => {
     axios
@@ -34,7 +35,7 @@ const SkillContextProvider = (props) => {
 
   return (
     <SkillContext.Provider value={{ skills, dispatch }}>
-      {props.children}
+       {props.children}
     </SkillContext.Provider>
   );
 };

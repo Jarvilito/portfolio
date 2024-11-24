@@ -1,16 +1,7 @@
-const prod = "https://jarvis-portfolio.herokuapp.com";
+const prod = 'https://api-dxf6gly5ia-uc.a.run.app';
 
-const local = "https://jarvis-portfolio.herokuapp.com";
+const local = 'http://127.0.0.1:5001/jarvis-portfolio-backend/us-central1/api';
 
-let backend;
+let URI = process.env.NODE_ENV === 'development' ? local : prod;
 
-if (process.env.NODE_ENV === "development") {
-  backend = local;
-} else {
-  backend = prod;
-}
-// https://jarvis-portfolio.herokuapp.com
-
-// http://localhost:5000
-
-export const backendUrl = backend;
+export const backendUrl = URI;

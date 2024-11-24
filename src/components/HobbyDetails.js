@@ -44,7 +44,7 @@ const initialState = [
   },
   {
     icon: "fas fa-baseball-ball",
-    title: "Watching tennis",
+    title: "Tennis",
   },
   {
     icon: "fas fa-pencil-alt",

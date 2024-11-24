@@ -32,6 +32,16 @@ a { color: inherit;}
   background-size: cover;
 }
 
+.banner-quote__img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.MuiAvatar-root.cover-photo--mobile  {
+  display: none;
+}
+
 /* .app-bar {
   opacity: 0.5;
 } */
@@ -43,8 +53,28 @@ a { color: inherit;}
 } */
 
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 960px) {
   .hero-image {
-    height: 40vh;
+    /* height: 40vh; */
+  }
+
+  .banner-quote {
+    margin-top: 2rem;
+  }
+
+  .banner-quote__img {
+    aspect-ratio: 7 / 5;
+    object-fit: contain;
+    margin-top: 4rem;
+  }
+
+ .cover-photo--desktop {
+      display: none;
+  }
+
+  .MuiAvatar-root.cover-photo--mobile {
+    display: block;
+    height: 6rem ;
+    width: 6rem ;
   }
 }

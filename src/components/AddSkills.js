@@ -224,7 +224,6 @@ const AddSkills = ({ handleDialogClose, skill }) => {
             <Select name="type" value={form.type} onChange={handleChange}>
               <MenuItem value="language">Language</MenuItem>
               <MenuItem value="framework">Framework</MenuItem>
-              })}
             </Select>
           </FormControl>
           <TextField

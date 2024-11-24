@@ -25,7 +25,9 @@ const TimelineContextProvider = (props) => {
       .then((data) => {
         const timelines = data.data;
 
-        dispatch({ type: "FETCH_SUCCESS", payload: timelines });
+        const sortedTimeline = timelines.sort((a, b) => new Date(b.dateStart) - new Date(a.dateStart));
+
+        dispatch({ type: "FETCH_SUCCESS", payload: sortedTimeline });
       })
       .catch((err) => {
         dispatch({ type: "FETCH_ERROR", payload: err });

@@ -19,6 +19,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const formattedText = (content) => content?.replace(/\n/g, "<br>");
+
 const TimelineDetails = ({ timeline }) => {
   const classes = useStyles();
   const { user } = useContext(AuthContext);
@@ -92,7 +94,7 @@ const TimelineDetails = ({ timeline }) => {
             );
           })}
         </div>
-        <p>{timeline.content}</p>
+        <p dangerouslySetInnerHTML={{ __html: formattedText(timeline.content) }} />
         <div>
           {timeline.link.display ? (
             <Link href={timeline.link.url} target="_blank" rel="noreferrer">
